@@ -5,6 +5,7 @@ import AvailableAppionment from './AppionmentComp/AvailableAppionment';
 const Appoinment = () => {
     const [selectedDate, setSelectedDate] = useState(new Date())
 
+
     return (
         <div>
             <AppionmentBanner
@@ -14,6 +15,8 @@ const Appoinment = () => {
             <AvailableAppionment
                 selectedDate={selectedDate}
             ></AvailableAppionment>
+
+
         </div>
     );
 };
