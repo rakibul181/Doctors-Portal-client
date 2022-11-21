@@ -1,19 +1,42 @@
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
+import Loading from '../../../Common/Loading';
 import BookingModal from './BookingModal';
 import OptionCard from './OptionCard';
 
 const AvailableAppionment = ({ selectedDate }) => {
-    const [appionmentOption, setAppionmentOption] = useState([])
-    const[treatment, setTreatent] = useState(null)
- 
-    useEffect(() => {
-        fetch('http://localhost:5000/appionmentOption')
-            .then(res => res.json())
-            .then(data => setAppionmentOption(data))
+    // const [appionmentOption, setAppionmentOption] = useState([])
+    const [treatment, setTreatent] = useState(null)
+    const date =format(selectedDate, 'PP')
 
-    }, [])
+    // const { data:appionmentOption=[],} = useQuery({
+    //     queryKey: ['appionmentOption'],
+    //     queryFn: () => fetch('http://localhost:5000/appionmentOption')
+    //         .then(res => res.json())
+
+    // })
+
+    const{data:appionmentOption=[],refetch, isLoading}=useQuery({
+        queryKey:['appionmentOption',date],
+        queryFn:async()=>{
+           const res = await fetch(`http://localhost:5000/appionmentOption?date=${date}`)
+           const data = await res.json()
+           return data
+
+        }
+    })
+
+    // useEffect(() => {
+    //     fetch('http://localhost:5000/appionmentOption')
+    //         .then(res => res.json())
+    //         .then(data => setAppionmentOption(data))
+
+    // }, [])
+    if(isLoading){
+        return<Loading></Loading>
+    }
+
     console.log(appionmentOption);
     return (
         <div className='mb-16'>
@@ -25,21 +48,22 @@ const AvailableAppionment = ({ selectedDate }) => {
                         key={options._id}
                         options={options}
                         setTreatent={setTreatent}
-                        
-                        ></OptionCard>)
+
+                    ></OptionCard>)
                 }
             </div>
             {
-                
-                    treatment &&
-                   <BookingModal 
-                   treatment={treatment}
-                   selectedDate={selectedDate}
-                   setTreatent={setTreatent}
-                   ></BookingModal>
+
+                treatment &&
+                <BookingModal
+                    treatment={treatment}
+                    selectedDate={selectedDate}
+                    setTreatent={setTreatent}
+                    refetch={refetch}
+                ></BookingModal>
             }
         </div>
     );
 };
 
-export default AvailableAppionment;
+export default AvailableAppionment;  

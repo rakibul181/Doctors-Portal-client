@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth'
 import app from "../firebase/fairbase.config"
 
 export const AuthContext = createContext()
@@ -23,6 +23,12 @@ const AuthProvider = ({children}) => {
         setLoading(true)
         return signOut(auth)
     }
+
+        const updateUser =(userInfo)=>{
+            return updateProfile(auth.currentUser,userInfo)
+        }
+
+
     useEffect(()=>{
         const unsubscribe = onAuthStateChanged(auth,currentUser =>{
             console.log('user observer');
@@ -38,6 +44,7 @@ const AuthProvider = ({children}) => {
         user,
         logOut,
         loading,
+        updateUser
     }
 
     return (

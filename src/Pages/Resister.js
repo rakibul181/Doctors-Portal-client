@@ -1,18 +1,31 @@
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link, Navigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
 
 const Resister = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
-    const {createUser}=useContext(AuthContext)
+    const {createUser,updateUser}=useContext(AuthContext)
+    const navigate = useNavigate()
+
+
     const handleResister = (data) => {
         console.log(data);
         createUser(data.email, data.password)
         .then(result =>{
             const user = result.user 
             console.log(user);
-            <Navigate to={'/'}></Navigate>
+            toast.success('User Created successfully')
+            const userInfo ={
+                displayName:data.name
+            }
+            updateUser(userInfo)
+                .then(()=>{
+                    toast.success('User Name Update')
+                    navigate('/')
+                })
+            
         })
         .catch(e=>console.error(e))
     }
@@ -60,6 +73,7 @@ const Resister = () => {
                     CONTINUE WITH GOOGLE
                 </button>
             </div>
+            
         </div>
     );
 };

@@ -6,7 +6,7 @@ const Navbar = () => {
     const { user, logOut } = useContext(AuthContext)
     const handelLogout = () => {
         logOut()
-            .them(() => { })
+            .then(() => { })
             .catch(e => console.error(e))
 
 

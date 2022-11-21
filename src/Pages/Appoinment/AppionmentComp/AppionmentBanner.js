@@ -12,6 +12,7 @@ const AppionmentBanner = ({ selectedDate, setSelectedDate }) => {
                         selected={selectedDate}
                         onSelect={setSelectedDate}
                     ></DayPicker>
+                     
                 </div>
             </div>
         </div>
