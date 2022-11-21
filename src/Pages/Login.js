@@ -1,11 +1,30 @@
-import React, { } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, } from "react-router-dom";
+import { AuthContext } from "../Context/AuthProvider";
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const { login } = useContext(AuthContext)
+    const [loginError, setLoginError] =useState('')
+    const location = useLocation()
+    const navigate = useNavigate()
+
+
+    const from = location.state?.from?.pathname || '/'
     const handleLogin = (data) => {
         console.log(data);
+        setLoginError('')
+        login(data.email, data.password)
+        .then(result =>{
+            const user = result.user 
+            console.log(user);
+            navigate(from,{replace:true})
+        })
+        .catch(e=>{
+            console.error(e)
+            setLoginError(e.message)
+        })
     }
 
     return (
@@ -33,7 +52,7 @@ const Login = () => {
                         type="password"
                         {...register("password", {
                             required: 'Password is requird',
-                            minLength:{value:6,message:'Password Must be 6 charecter longer  '}
+                            minLength: { value: 6, message: 'Password Must be 6 charecter longer  ' }
                         })}
                         className="input input-bordered w-full "
                     />
@@ -50,6 +69,7 @@ const Login = () => {
                 <label className="label text-center">
                     <span className="label-text text-center">New To Doctors Portal? <Link to={'../resister'} className='text-secondary '> Create New Account </Link></span>
                 </label>
+                <div>{loginError && <p className="text-error">{loginError}</p>}</div>
             </form>
             <div className="divider">OR</div>
             <div>

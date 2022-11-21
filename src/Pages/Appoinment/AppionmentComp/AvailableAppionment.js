@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import BookingModal from './BookingModal';
@@ -6,10 +7,9 @@ import OptionCard from './OptionCard';
 const AvailableAppionment = ({ selectedDate }) => {
     const [appionmentOption, setAppionmentOption] = useState([])
     const[treatment, setTreatent] = useState(null)
-
-
+ 
     useEffect(() => {
-        fetch('appionmentOption.json')
+        fetch('http://localhost:5000/appionmentOption')
             .then(res => res.json())
             .then(data => setAppionmentOption(data))
 

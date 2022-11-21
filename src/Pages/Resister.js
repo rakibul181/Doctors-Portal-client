@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { AuthContext } from "../Context/AuthProvider";
 
 const Resister = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
-    const handleResister = (data, errors) => {
+    const {createUser}=useContext(AuthContext)
+    const handleResister = (data) => {
         console.log(data);
-        console.log(errors);
+        createUser(data.email, data.password)
+        .then(result =>{
+            const user = result.user 
+            console.log(user);
+            <Navigate to={'/'}></Navigate>
+        })
+        .catch(e=>console.error(e))
     }
     return (
         <div className="w-full md:w-2/3 lg:w-1/3 h-[800px] m-auto ">
@@ -30,7 +38,7 @@ const Resister = () => {
                     <label className="label">
                         <span className="label-text text-xl">Your Password</span>
                     </label>
-                    <input type="password"  {...register('password', { required: 'Passwordis required' })} className="input input-bordered w-full " />
+                    <input type="password"  {...register('password', { required: 'Passwordis required',minLength:{value:6,message:'password must be 8 charecter'} })} className="input input-bordered w-full " />
                     {errors.password && <p className="text-error">{errors.password?.message}</p>}
                     <input />
                 </div>
