@@ -1,9 +1,10 @@
 import React from 'react';
+import Myappoinment from './Myappoinment';
 
 const Dashboard = () => {
     return (
         <div>
-            <p>This is Dash board</p>
+             <Myappoinment></Myappoinment>
         </div>
     );
 };

@@ -1,33 +1,60 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthProvider";
+import useToken from "../Hooks/useToken";
 
 const Resister = () => {
     const { register, handleSubmit, formState: { errors } } = useForm()
-    const {createUser,updateUser}=useContext(AuthContext)
+    const { createUser, updateUser } = useContext(AuthContext)
+    const [userCreatedEmail, setUserCreatedEmail] = useState([''])
     const navigate = useNavigate()
+    const [token] = useToken(userCreatedEmail)
 
-
+    if (token) {
+        navigate('/')
+    }
     const handleResister = (data) => {
         console.log(data);
         createUser(data.email, data.password)
-        .then(result =>{
-            const user = result.user 
-            console.log(user);
-            toast.success('User Created successfully')
-            const userInfo ={
-                displayName:data.name
+            .then(result => {
+                const user = result.user
+                console.log(user);
+                toast.success('User Created successfully')
+                const userInfo = {
+                    displayName: data.name
+                }
+                updateUser(userInfo)
+                    .then(() => {
+                        toast.success('User Name Update')
+                        saveUserInfo(data.name, data.email)
+                    })
+
+            })
+            .catch(e => console.error(e))
+
+        const saveUserInfo = (name, email) => {
+            const user = {
+                name,
+                email
             }
-            updateUser(userInfo)
-                .then(()=>{
-                    toast.success('User Name Update')
-                    navigate('/')
+
+            fetch('http://localhost:5000/users', {
+                method: "POST",
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify(user)
+            })
+                .then(res => res.json())
+                .then(data => {
+
+                    setUserCreatedEmail(email)
+
+
                 })
-            
-        })
-        .catch(e=>console.error(e))
+        }
+
+
     }
     return (
         <div className="w-full md:w-2/3 lg:w-1/3 h-[800px] m-auto ">
@@ -51,7 +78,7 @@ const Resister = () => {
                     <label className="label">
                         <span className="label-text text-xl">Your Password</span>
                     </label>
-                    <input type="password"  {...register('password', { required: 'Passwordis required',minLength:{value:6,message:'password must be 8 charecter'} })} className="input input-bordered w-full " />
+                    <input type="password"  {...register('password', { required: 'Passwordis required', minLength: { value: 6, message: 'password must be 8 charecter' } })} className="input input-bordered w-full " />
                     {errors.password && <p className="text-error">{errors.password?.message}</p>}
                     <input />
                 </div>
@@ -73,7 +100,7 @@ const Resister = () => {
                     CONTINUE WITH GOOGLE
                 </button>
             </div>
-            
+
         </div>
     );
 };
