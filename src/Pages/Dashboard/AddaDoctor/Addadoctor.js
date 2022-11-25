@@ -15,7 +15,7 @@ const Addadoctor = () => {
     const { data: specialties, isLoading } = useQuery({
         queryKey: ['specialty'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/treatmentName')
+            const res = await fetch('https://doctor-portal-server-sigma.vercel.app/treatmentName')
             const data = await res.json()
             return data
         }
@@ -51,7 +51,7 @@ const Addadoctor = () => {
                 // console.log(doctor);
 
                 // post data on mongo
-                fetch('http://localhost:5000/doctors',{
+                fetch('https://doctor-portal-server-sigma.vercel.app/doctors',{
                 method:'POST',
                 headers:{
                     'content-type' : 'application/json',

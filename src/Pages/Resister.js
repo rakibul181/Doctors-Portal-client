@@ -40,7 +40,7 @@ const Resister = () => {
                 email
             }
 
-            fetch('http://localhost:5000/users', {
+            fetch('https://doctor-portal-server-sigma.vercel.app/users', {
                 method: "POST",
                 headers: { 'content-type': 'application/json' },
                 body: JSON.stringify(user)

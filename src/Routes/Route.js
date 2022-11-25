@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import Error from "../Common/Error";
 import DashboardLayout from "../Layout/DashboardLayout";
 import Main from "../Layout/Main";
 import Allusers from "../Pages/AllUser/Allusers";
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
     {
         path:'/',
         element:<Main></Main>,
+        errorElement:<Error></Error>,
         children:[
             {
                 path:'/',
@@ -41,6 +43,7 @@ export const router = createBrowserRouter([
     {
         path:'/dashboard',
         element:<PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        errorElement:<Error></Error>,
         children:[
             {
                 path:'/dashboard/',
@@ -67,7 +70,7 @@ export const router = createBrowserRouter([
             {
                 path:'/dashboard/payment/:id',
                 element: <AdminRoute> <Payment></Payment></AdminRoute>,
-                loader:({params})=> fetch(`http://localhost:5000/booking/${params.id}`)
+                loader:({params})=> fetch(`https://doctor-portal-server-sigma.vercel.app/booking/${params.id}`)
                 
             }
         ]

@@ -12,7 +12,7 @@ const AvailableAppionment = ({ selectedDate }) => {
 
     // const { data:appionmentOption=[],} = useQuery({
     //     queryKey: ['appionmentOption'],
-    //     queryFn: () => fetch('http://localhost:5000/appionmentOption')
+    //     queryFn: () => fetch('https://doctor-portal-server-sigma.vercel.app/appionmentOption')
     //         .then(res => res.json())
 
     // })
@@ -20,7 +20,7 @@ const AvailableAppionment = ({ selectedDate }) => {
     const{data:appionmentOption=[],refetch, isLoading}=useQuery({
         queryKey:['appionmentOption',date],
         queryFn:async()=>{
-           const res = await fetch(`http://localhost:5000/appionmentOption?date=${date}`)
+           const res = await fetch(`https://doctor-portal-server-sigma.vercel.app/appionmentOption?date=${date}`)
            const data = await res.json()
            return data
 
@@ -28,7 +28,7 @@ const AvailableAppionment = ({ selectedDate }) => {
     })
 
     // useEffect(() => {
-    //     fetch('http://localhost:5000/appionmentOption')
+    //     fetch('https://doctor-portal-server-sigma.vercel.app/appionmentOption')
     //         .then(res => res.json())
     //         .then(data => setAppionmentOption(data))
 

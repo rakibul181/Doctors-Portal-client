@@ -9,13 +9,13 @@ const Allusers = () => {
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"] ,
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users");
+      const res = await fetch("https://doctor-portal-server-sigma.vercel.app/users");
       const data = await res.json();
       return data;
     },
   });
   const handelUpdateRole = (id) => {
-    fetch(`http://localhost:5000/users/admin/${id}`, {
+    fetch(`https://doctor-portal-server-sigma.vercel.app/users/admin/${id}`, {
       method: "PUT",
       headers: {
         authorazation: `bearer ${localStorage.getItem("accessToken")}`,

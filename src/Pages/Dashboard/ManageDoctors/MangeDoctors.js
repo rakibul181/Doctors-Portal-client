@@ -10,7 +10,7 @@ const MangeDoctors = () => {
     const { data: doctors, isLoading, refetch } = useQuery({
         queryKey: ['doctors'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/doctors',{
+            const res = await fetch('https://doctor-portal-server-sigma.vercel.app/doctors',{
                 headers:{
                     authorazation: `bearer ${localStorage.getItem('accessToken')}`
     
@@ -29,7 +29,7 @@ const MangeDoctors = () => {
 
         console.log(doctor);
 
-        fetch(`http://localhost:5000/doctors/${_id}`, {
+        fetch(`https://doctor-portal-server-sigma.vercel.app/doctors/${_id}`, {
             method: 'DELETE',
             headers:{
                 authorazation: `bearer ${localStorage.getItem('accessToken')}`
