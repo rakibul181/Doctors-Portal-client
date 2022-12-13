@@ -6,7 +6,7 @@ const useToken = (email) => {
     useEffect(() => {
         if (email) {
             fetch(`https://doctor-portal-server-sigma.vercel.app/jwt?email=${email}`)
-                .then(res => res.json())
+                .then(res => res.json()) 
                 .then(data => {
                     if (data.accessToken) {
                         localStorage.setItem('accessToken', data.accessToken)

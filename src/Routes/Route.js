@@ -7,7 +7,7 @@ import Appoinment from "../Pages/Appoinment/Appoinment";
 import Addadoctor from "../Pages/Dashboard/AddaDoctor/Addadoctor";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import MangeDoctors from "../Pages/Dashboard/ManageDoctors/MangeDoctors";
-import Home from "../Pages/Home";
+import Home from "../Pages/Home"; 
 import Login from "../Pages/Login";
 import Payment from "../Pages/Payment/Payment";
 import Resister from "../Pages/Resister";

@@ -12,7 +12,7 @@ const Resister = () => {
     const navigate = useNavigate()
     const [token] = useToken(userCreatedEmail)
 
-    if (token) {
+    if (token) { 
         navigate('/')
     }
     const handleResister = (data) => {
@@ -29,7 +29,7 @@ const Resister = () => {
                     .then(() => {
                         toast.success('User Name Update')
                         saveUserInfo(data.name, data.email)
-                    })
+                    })  
 
             })
             .catch(e => console.error(e))

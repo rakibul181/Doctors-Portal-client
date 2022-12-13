@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 const useAdmin = (email) => {
     const [isAdmin, setIsAdmin] = useState(false)
-    const [isAdminLoading, setIsAdminLoading] = useState(true)
+    const [isAdminLoading, setIsAdminLoading] = useState(true)   
     useEffect(() => {
         if (email) {
             fetch(`https://doctor-portal-server-sigma.vercel.app/users/admin/${email}`)
@@ -10,7 +10,7 @@ const useAdmin = (email) => {
                 .then(data => {
                     console.log(data);
                     setIsAdmin(data.isAdmin)
-                    setIsAdminLoading(false)
+                       (false)
                 })
         }
     }, [email])

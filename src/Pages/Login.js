@@ -29,7 +29,7 @@ const Login = () => {
                 const user = result.user
                 console.log(user);
                 setUserEmail(data.email)
-            })
+            })  
             .catch(e => {
                 console.error(e)
                 setLoginError(e.message)
